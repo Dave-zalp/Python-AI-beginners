@@ -1,0 +1,6 @@
+0       New York
+1    Los Angelos
+2        Chicago
+3        Houston
+4        Phoenix
+Name: City, dtype: object
