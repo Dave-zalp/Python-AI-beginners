@@ -1,0 +1,121 @@
+DATA TRANSFORMATION AND FEATURE ENGINEERING (BEGINNER NOTES)
+
+WHAT IS DATA TRANSFORMATION?
+Data transformation is the process of changing raw data into a format that a machine learning model can easily understand and learn from.
+
+Why it is important:
+
+Machine learning models work best with numbers
+
+Models can be biased if some features have much larger values than others
+
+Models cannot understand text or categories directly
+
+SCALING NUMERICAL DATA (MinMaxScaler)
+
+MinMaxScaler is used to scale numerical features so that all values fall between 0 and 1.
+
+Example problem:
+
+Age may range from 20 to 60
+
+Income may range from 30,000 to 120,000
+
+Because Income has much larger values, the model may think it is more important than Age.
+
+MinMaxScaler solves this by applying the formula:
+
+(x - min) / (max - min)
+
+After scaling:
+
+Smallest value becomes 0
+
+Largest value becomes 1
+
+All features are now on the same scale
+
+Code example:
+from sklearn.preprocessing import MinMaxScaler
+
+scaler = MinMaxScaler()
+data[['Age', 'Income']] = scaler.fit_transform(data[['Age', 'Income']])
+
+Explanation:
+
+fit(): learns the minimum and maximum values
+
+transform(): applies the scaling
+
+fit_transform(): does both at once
+
+CATEGORICAL DATA ENCODING (ONE-HOT ENCODING)
+
+Machine learning models cannot understand text such as:
+
+Male / Female
+
+Yes / No
+
+One-Hot Encoding converts categorical values into binary (0 and 1) columns.
+
+Example before encoding:
+Gender Purchased
+Male Yes
+Female No
+
+After One-Hot Encoding:
+Gender_Male Gender_Female Purchased_Yes Purchased_No
+1 0 1 0
+0 1 0 1
+
+Each category becomes its own column:
+
+1 means the category is present
+
+0 means the category is not present
+
+Code example:
+data_encoded = pd.get_dummies(data, columns=['Gender', 'Purchased'])
+
+WHY ONE-HOT ENCODING IS IMPORTANT
+
+If we convert categories like this:
+Male = 1
+Female = 2
+
+The model may think Female is greater than Male, which is incorrect.
+
+One-Hot Encoding:
+
+Prevents false ranking
+
+Treats all categories equally
+
+COMMON BEGINNER MISTAKES
+
+Scaling categorical data (wrong)
+
+Only scale numerical columns
+
+Forgetting to save the scaler
+
+You need the same scaler when predicting new data
+
+Encoding the target variable incorrectly
+
+Sometimes only features should be encoded, not labels
+
+SIMPLE WAY TO REMEMBER
+
+Scaling = making numbers fair
+
+Encoding = translating words into numbers
+
+WHEN TO USE WHAT
+
+MinMaxScaler: when numeric values have very different ranges
+
+One-Hot Encoding: when dealing with text or categories
+
+Label Encoding: when categories have order (Low, Medium, High)
